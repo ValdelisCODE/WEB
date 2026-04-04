@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sites Site[]
+}
+
+model Site {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  phone     String   @default("")
+  email     String   @default("")
+  address   String   @default("")
+  heroTitle String   @default("Get More Customers Without the Guesswork")
+  heroText  String   @default("We help local service businesses generate a steady stream of qualified leads.")
+  color     String   @default("#4f46e5")
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  leads    Lead[]
+  services Service[]
+
+  @@index([userId])
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  business  String
+  service   String   @default("")
+  message   String   @default("")
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId])
+  @@index([createdAt])
+}
+
+model Service {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  icon        String @default("M13 10V3L4 14h7v7l9-11h-7z")
+  order       Int    @default(0)
+
+  siteId String
+  site   Site   @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId])
+}
