@@ -11,9 +11,33 @@ export interface NavLink {
   href: string;
 }
 
-/** Feature card data */
-export interface Feature {
+/** Lead form data */
+export interface LeadFormData {
+  name: string;
+  email: string;
+  phone: string;
+  business: string;
+  service: string;
+  message: string;
+}
+
+/** Service card data */
+export interface Service {
+  icon: string;
   title: string;
   description: string;
-  icon: string;
+}
+
+/** Testimonial */
+export interface Testimonial {
+  name: string;
+  business: string;
+  quote: string;
+  rating: number;
+}
+
+/** FAQ item */
+export interface FaqItem {
+  question: string;
+  answer: string;
 }

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { NAV_LINKS, SITE_NAME } from "@/lib/constants";
+import { NAV_LINKS, SITE_NAME, BUSINESS_INFO } from "@/lib/constants";
 import { cn } from "@/lib/cn";
 import { useEffect, useState } from "react";
 
@@ -18,16 +18,20 @@ export function Header() {
 
   return (
     <header
+      id="top"
       className={cn(
         "sticky top-0 z-50 w-full transition-all",
         scrolled
-          ? "border-b border-zinc-200 bg-white/80 backdrop-blur-lg dark:border-zinc-800 dark:bg-zinc-950/80"
+          ? "border-b border-zinc-200 bg-white/90 backdrop-blur-lg dark:border-zinc-800 dark:bg-zinc-950/90"
           : "bg-transparent",
       )}
     >
       <Container className="flex h-16 items-center justify-between">
-        <a href="/" className="text-lg font-bold tracking-tight">
-          {SITE_NAME}
+        <a href="/" className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-sm font-bold text-white">
+            LB
+          </div>
+          <span className="text-lg font-bold tracking-tight">{SITE_NAME}</span>
         </a>
 
         {/* Desktop nav */}
@@ -41,7 +45,11 @@ export function Header() {
               {link.label}
             </a>
           ))}
-          <Button size="sm">Get Started</Button>
+          <a href={`tel:${BUSINESS_INFO.phone.replace(/\D/g, "")}`}>
+            <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:text-white dark:hover:bg-indigo-700">
+              {BUSINESS_INFO.phone}
+            </Button>
+          </a>
         </nav>
 
         {/* Mobile toggle */}
@@ -80,9 +88,11 @@ export function Header() {
               {link.label}
             </a>
           ))}
-          <Button size="sm" className="mt-2 w-full">
-            Get Started
-          </Button>
+          <a href={`tel:${BUSINESS_INFO.phone.replace(/\D/g, "")}`}>
+            <Button size="sm" className="mt-2 w-full bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:text-white dark:hover:bg-indigo-700">
+              Call {BUSINESS_INFO.phone}
+            </Button>
+          </a>
         </div>
       )}
     </header>
